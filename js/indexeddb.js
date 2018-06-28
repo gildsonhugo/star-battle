@@ -1,6 +1,6 @@
 var connection;
 
-var openRequest = window.indexedDB.open('starbattle-ranking', 3);
+var openRequest = window.indexedDB.open('starbattle-ranking', 1);
 
 openRequest.onupgradeneeded = e =>{
 
