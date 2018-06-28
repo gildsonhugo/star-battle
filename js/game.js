@@ -348,7 +348,6 @@ class Game{
         });
 
         document.addEventListener('keyup', e=>{
-            console.log(e.keyCode);
             switch (e.keyCode){
                 case 32:
                     this.spaceIsDown = false;
