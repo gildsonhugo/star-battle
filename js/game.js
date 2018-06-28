@@ -23,6 +23,7 @@ class Game{
             {count: 0, timer: 800, obj: 'asteroid'},
         ];
         this.spaceIsDown = false;
+        this.ranking = [];
     }
 
     init(){
@@ -178,6 +179,7 @@ class Game{
         this.sprites.push(friend);
     }
     shoot(){
+        if(this.paused) return false;
         this.playSound('fire');
         let missile = new Missile(704, 47, 9, 6, this.defender.x+this.defender.width, this.defender.y+this.defender.halfHeight());
         missile.vx = 10;
@@ -208,19 +210,78 @@ class Game{
         }
     }
 
-    sendData(e, formData){
-        formData.append('time', this.time);
-        formData.append('score', this.score);
-        fetch(e.target.action, {
-            method: 'post',
-            body: formData
-        }).then(r=>r.json()).then(list=>{
-            let content = list.map((item,index) =>{
-                return `<tr><td>${index+1}</td><td>${item.name}</td><td>${item.score}</td><td>${item.time}</td></tr>`;
-            });
-            $('#ranking table tbody').html(content.join(""));
-            goToBoard('ranking');
+    sendData(e){
+
+        let transaction = connection.transaction(['ranking'], 'readwrite');
+
+        let store = transaction.objectStore('ranking');
+
+        let result = {name: new FormData(e.target).get('name'), time: this.time, score: this.score};
+
+        let request = store.add(result);
+
+        request.onsuccess = e => {
+            this.getRanking();
+        }
+
+        request.onerror = e =>{
+            console.log(e.target.error);
+        }
+
+        // formData.append('time', this.time);
+        // formData.append('score', this.score);
+        // fetch(e.target.action, {
+        //     method: 'post',
+        //     body: formData
+        // }).then(r=>r.json()).then(list=>{
+        //     let content = list.map((item,index) =>{
+        //         return `<tr><td>${index+1}</td><td>${item.name}</td><td>${item.score}</td><td>${item.time}</td></tr>`;
+        //     });
+        //     $('#ranking table tbody').html(content.join(""));
+        //
+        // });
+    }
+
+    getRanking(){
+
+        let end = false;
+
+        let transaction = connection.transaction(['ranking'], 'readwrite');
+
+        let store = transaction.objectStore('ranking');
+
+        let cursor = store.openCursor();
+
+        cursor.onsuccess = e =>{
+            let atual = e.target.result;
+            if(atual){
+                let data = atual.value;
+                this.ranking.push(data);
+                atual.continue();
+            }else{
+                this.listRanking();
+            }
+        }
+
+        cursor.onerror = e =>{
+            console.log(e.target.error.name);
+        }
+
+    }
+
+    listRanking(){
+
+        this.ranking = this.ranking.sort((a,b) => b.score-a.score);
+
+        console.log(this.ranking);
+
+        let content = this.ranking.map((item,index) => {
+            return `<tr><td>${index+1}</td><td>${item.name}</td><td>${item.score}</td><td>${item.time}</td></tr>`;
         });
+
+        $('#ranking table tbody').html(content.join(""));
+
+        goToBoard('ranking');
     }
 
     render(){
@@ -256,7 +317,6 @@ class Game{
     startListeners(){
 
         document.addEventListener('keydown', e=>{
-           console.log(e.keyCode);
             switch (e.keyCode){
                 case 32:
                     if(!this.spaceIsDown){
@@ -271,7 +331,6 @@ class Game{
         });
 
         document.addEventListener('keyup', e=>{
-            console.log(e.keyCode);
             switch (e.keyCode){
                 case 32:
                     this.spaceIsDown = false;
@@ -311,9 +370,8 @@ class Game{
         });
         $('#formOver').on('submit', (e)=>{
             e.preventDefault();
-            let formData = new FormData(e.target);
-            this.sendData(e, formData);
-        })
+            this.sendData(e);
+        });
 
         $('#pause-play').on('click', (e)=>{
             this.togglePause();
