@@ -1,0 +1,321 @@
+/*FONTS*/
+@font-face {
+    src: url("../fonts/omnes-semibold-webfont.ttf");
+    font-family: 'Omnes';
+}
+
+/*CSS RESET*/
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: Omnes;
+}
+
+/*UTIL CLASSES*/
+.board{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.6);
+}
+.paused{
+    animation-play-state: paused !important;
+}
+.button-start{
+    background: #d33c38;
+    color: #fff;
+    font-size: 22pt;
+    text-transform: uppercase;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.button-start .wave{
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background: rgba(255,255,255,0.3);
+}
+.button-start:hover{
+    background: #f19e0d;
+}
+
+.button-start:active .wave{
+    animation: ripple 0.5s linear;
+}
+/*BODY*/
+body{
+    background: #cecece;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*PLANETS*/
+.planet{
+    position: absolute;
+    right: 0;
+    animation: r2l linear infinite;
+    opacity: 0.5;
+}
+.planet img{
+   width: 100%;
+}
+#planet1{
+    width: 40px;
+    top: 40px;
+    animation-duration: 8s;
+}
+#planet2{
+    width: 45px;
+    top: 160px;
+    animation-duration: 7s;
+}
+#planet3{
+    width: 50px;
+    top: 280px;
+    animation-duration: 6.5s;
+}
+#planet4{
+    width: 20px;
+    top: 380px;
+    animation-duration: 15s;
+}
+#planet5{
+    width: 30px;
+    top: 480px;
+    animation-duration: 10s;
+}
+
+
+.box-game{
+    background: #fff;
+    width: 960px;
+    height: 600px;
+    background: url("../img/background-1.jpg") repeat-x;
+    animation: slidebg 3s linear infinite;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/*INSTRUCTIONS*/
+
+#instructions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.box-instructions{
+    transform: scaleX(1);
+    animation: instructions 0.2s linear;
+    text-align: center;
+}
+
+/*RANKING*/
+
+#ranking{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+#ranking h2{
+    font-size: 35pt;
+}
+#ranking table{
+    background: #d33c38;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    width: 500px;
+    font-size: 22pt;
+}
+
+#ranking table tr, #ranking table thead{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#ranking table tbody{
+    display: block;
+    height: 140px;
+    overflow-y: scroll;
+}
+
+
+/*GAME*/
+#game, #canvasGame{
+    background: transparent !important;
+}
+
+#game > *{
+    z-index: 1;
+}
+#canvasGame{
+    z-index: 0;
+}
+#game{
+    display: flex;
+    color: yellow !important;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+}
+.top-game{
+    display: flex;
+    justify-content: space-between;
+}
+.bottom-game{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.box-time{
+    display: flex;
+    align-items: flex-start;
+}
+.group-time{
+    margin-left: 15px;
+}
+
+.box-score{
+    text-align: center;
+}
+.box-score p{
+    font-size: 30pt;
+}
+.box-fonts{
+    display: flex;
+}
+.down-font{
+    margin-left: 10px;
+}
+
+.right-game > img{
+    height: 70px;
+}
+.controls{
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pause-sound{
+    display: flex;
+    justify-content: space-around;
+}
+.group-control{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+}
+.control{
+    width: 45px;
+    height: 45px;
+    background: url("../img/arrow.png") no-repeat;
+}
+#ind-fuel{
+    position: absolute;
+    left: 212px;
+    top: -15px;
+}
+#up{
+    transform: rotate(-90deg);
+}
+#down{
+    transform: rotate(90deg);
+}
+#left{
+    transform: rotate(-180deg);
+}
+.pause-sound > div{
+    width: 35px;
+    height: 35px;
+}
+#pause-play{
+    background: url("../img/pause.png") no-repeat;
+}
+#pause-play.paused{
+    background: url("../img/play.png") no-repeat;
+}
+#sound-mute{
+    background: url("../img/sound.png") no-repeat;
+}
+#sound-mute.muted{
+    background: url("../img/mute.png") no-repeat;
+}
+
+/*OVER*/
+#over{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#over h2{
+    font-size: 35pt;
+}
+#over form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#over form input{
+    font-size: 22pt;
+    text-align: center;
+    border-radius: 8px;
+}
+.btn-submit:disabled{
+    background: #cecece;
+}
+.btn-submit{
+    margin-top: 15px;
+    background: #d33c38;
+    padding: 5px 25px;
+    color: #fff;
+    border: none;
+}
+
+/*ANIMATIONS*/
+
+@keyframes slidebg {
+    to{background-position: -1080px 0;}
+}
+
+@keyframes r2l {
+    to{right: 100%}
+}
+
+@keyframes instructions {
+    from{ transform: scaleX(0); }
+    to{ transform: scaleX(1); }
+}
+
+@keyframes ripple {
+    0%{transform: scale(0); opacity: 0;}
+    30%{transform: scale(1); opacity: 1;}
+    100%{transform: scale(1); opacity: 0;}
+}

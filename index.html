@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Star Battle</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="box-game">
+        <div class="bg-planets">
+            <div class="planet" id="planet1">
+                <img src="img/001-global.png" alt="planet">
+            </div>
+            <div class="planet" id="planet2">
+                <img src="img/002-travel.png" alt="planet">
+            </div>
+            <div class="planet" id="planet3">
+                <img src="img/003-science-2.png" alt="planet">
+            </div>
+            <div class="planet" id="planet4">
+                <img src="img/005-science.png" alt="planet">
+            </div>
+            <div class="planet" id="planet5">
+                <img src="img/010-uranus.png" alt="planet">
+            </div>
+        </div>
+        <div class="board" id="instructions">
+            <img src="img/logo-02.png" alt="logo-game">
+            <div class="box-instructions">
+                <h2>How to Play Star Battle.</h2>
+                <p>1. Move the spaceship using the sensible areas in the screen;</p>
+                <p>2. The timer present the time lapsed;</p>
+                <p>3. The fuel counter show the remain fuel;</p>
+                <p>4. During the flight, the spaceship needs to destroy the asteroids and enemy spaceships that are presented in the space;</p>
+                <p>5. You can shoot pressing Space Bar;</p>
+                <p>6. If the spaceship hits a asteroid or another spaceship, you lose 15 points of fuel;</p>
+                <p>7. Enemy spaceship needs 1 shot to be destroyed, you will get 5 points for each enemy destroyed;</p>
+                <p>8. Asteroid needs 2 shots to be destroyed, you will get 10 points for each asteroid destroyed;</p>
+                <p>9. If you destroy a friendly spaceship, you lose 10 points;</p>
+                <p>10. During the flight, the spaceship needs to collect fuel in the space;</p>
+                <p>11. You can pause the game clicking in a button pause, or pressing the letter "p";</p>
+                <p>12. Go beyond all limits;</p>
+                <p>Battle in Space with Star Battle Championship...</p>
+            </div>
+            <div class="button-start" onclick="goToBoard('game')"><div class="wave"></div>Start Game</div>
+        </div>
+
+        <div class="board" id="game">
+            <div class="top-game">
+                <div class="box-time">
+                    <img src="img/timer.png" alt="timer-icon">
+                    <div class="group-time fonts">
+                        <p>Time</p>
+                        <p id="int-time">00</p>
+                    </div>
+                </div>
+                <div class="box-score fonts">
+                    <h2>Score</h2>
+                    <p id="ind-score">00</p>
+                </div>
+                <div class="box-fonts">
+                    <div id="up-font" onclick="objGame.incrementFont()"><img src="img/font.png" alt="font-icon"></div>
+                    <div id="down-font" onclick="objGame.decrementFont()"><img src="img/font-less.png" alt="font-icon"></div>
+                </div>
+            </div>
+            <div class="bottom-game">
+                <div class="controls">
+                    <div id="left" class="control"></div>
+                    <div class="group-control">
+                        <div id="up" class="control"></div>
+                        <div id="down" class="control"></div>
+                    </div>
+                    <div id="right" class="control"></div>
+                </div>
+                <h2 id="ind-fuel">15</h2>
+                <div class="right-game">
+                    <img src="img/logo-02.png" alt="logo-game">
+                    <div class="pause-sound">
+                        <div id="pause-play"></div>
+                        <div id="sound-mute"></div>
+                    </div>
+                </div>
+            </div>
+            <canvas class="board " width="960" height="600" id="canvasGame">
+
+            </canvas>
+        </div>
+
+        <div class="board" id="over">
+            <h2>Game Over</h2>
+            <form action="php/register.php" method="post" id="formOver">
+                <input type="text" name="name" id="input-name" placeholder="Name">
+                <input type="submit" class="btn-submit" disabled value="Send">
+            </form>
+        </div>
+
+        <div class="board " id="ranking">
+            <img src="img/logo-02.png" alt="logo-game">
+            <h2>Ranking</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>ACE</td>
+                        <td>300</td>
+                        <td>30s</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>ACE</td>
+                        <td>300</td>
+                        <td>30s</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>ACE</td>
+                        <td>300</td>
+                        <td>30s</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>ACE</td>
+                        <td>300</td>
+                        <td>30s</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-start" onclick="window.location.reload()"><div class="wave"></div>Start Game</div>
+        </div>
+    </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/objects.js"></script>
+    <script src="js/collision.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
