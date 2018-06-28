@@ -327,13 +327,37 @@ class Game{
                 case 80:
                     this.togglePause();
                     break;
+                case 38:
+                    if(this.paused)return false;
+                    this.defender.vy = -5;
+                    break;
+                case 40:
+                    if(this.paused)return false;
+                    this.defender.vy = 5;
+                    break;
+                case 39:
+                    if(this.paused)return false;
+                    this.defender.vx = 5;
+                    break;
+                case 37:
+                    if(this.paused)return false;
+                    this.defender.vx = -5;
+                    break;
+
            }
         });
 
         document.addEventListener('keyup', e=>{
+            console.log(e.keyCode);
             switch (e.keyCode){
                 case 32:
                     this.spaceIsDown = false;
+                    break;
+                default:
+                    if(e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40){
+                        this.defender.vx = 0;
+                        this.defender.vy = 0;
+                    }
                     break;
             }
         });
